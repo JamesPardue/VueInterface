@@ -2,18 +2,30 @@
 import { ref } from 'vue'
 import TicketForm from './components/TicketForm.vue'
 import TicketSummary from './components/TicketSummary.vue'
+import { type Ticket } from '@/definitions/TicketTypeDefintions'
 
-const AppState = ref<'input' | 'summary'>('input')
+type InputState = {
+  state: 'input'
+}
+type SummaryState = {
+  state: 'summary'
+  ticket?: Ticket
+}
+
+const AppState = ref<InputState | SummaryState>({ state: 'input' })
 </script>
 
 <template>
-  <TicketForm v-if="AppState === 'input'" @change-to-summary-state="AppState = 'summary'" />
+  <TicketForm
+    v-if="AppState.state === 'input'"
+    @change-to-summary-state="AppState = { state: 'summary' }"
+  />
   <TicketSummary v-else />
 
   <button
     @click="
       () => {
-        AppState = 'input'
+        AppState = { state: 'input' }
       }
     "
   >
@@ -22,7 +34,7 @@ const AppState = ref<'input' | 'summary'>('input')
   <button
     @click="
       () => {
-        AppState = 'summary'
+        AppState = { state: 'summary' }
       }
     "
   >

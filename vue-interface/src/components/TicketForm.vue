@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import InputFrame from './InputFrame.vue'
+import { type TicketCategory } from '@/definitions/TicketTypeDefintions'
 
-const categorySelected = ref('')
+const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref('')
 const subjectText = ref('')
 const descriptionText = ref('')
@@ -19,10 +20,10 @@ defineEmits(['changeToSummaryState'])
     <div class="inputs">
       <InputFrame label="Category">
         <select v-model="categorySelected">
-          <option>Hardware</option>
-          <option>Software</option>
-          <option>Network</option>
-          <option>In-Processing</option>
+          <option value="hardware">Hardware</option>
+          <option value="software">Software</option>
+          <option value="network">Network</option>
+          <option value="in-processing">In-Processing</option>
         </select>
       </InputFrame>
 
@@ -44,6 +45,15 @@ defineEmits(['changeToSummaryState'])
     </div>
 
     <button @click="$emit('changeToSummaryState')">Submit</button>
+    <button
+      @click="
+        () => {
+          console.log(categorySelected)
+        }
+      "
+    >
+      Test Category
+    </button>
   </div>
 </template>
 
