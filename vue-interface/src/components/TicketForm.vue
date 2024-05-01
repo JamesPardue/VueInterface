@@ -44,7 +44,21 @@ defineEmits(['changeToSummaryState'])
       </InputFrame>
     </div>
 
-    <button @click="$emit('changeToSummaryState')">Submit</button>
+    <button
+      @click="
+        $emit('changeToSummaryState', {
+          state: 'summary',
+          ticket: {
+            id: 1,
+            category: 'hardware',
+            summary: 'summary test frn input'
+          }
+        })
+      "
+    >
+      Submit
+    </button>
+
     <button
       @click="
         () => {

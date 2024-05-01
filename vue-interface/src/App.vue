@@ -12,15 +12,18 @@ type SummaryState = {
   ticket?: Ticket
 }
 
+const TestTicket: Ticket = {
+  id: 999,
+  category: 'software',
+  subject: '1111111'
+}
+
 const AppState = ref<InputState | SummaryState>({ state: 'input' })
 </script>
 
 <template>
-  <TicketForm
-    v-if="AppState.state === 'input'"
-    @change-to-summary-state="AppState = { state: 'summary' }"
-  />
-  <TicketSummary v-else />
+  <TicketForm v-if="AppState.state === 'input'" @change-to-summary-state="(i) => (AppState = i)" />
+  <TicketSummary v-else :ticket="TestTicket" />
 
   <button
     @click="

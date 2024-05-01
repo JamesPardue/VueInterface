@@ -1,4 +1,4 @@
-export type TicketCategory = null | 'Hardware' | 'Software'
+export type TicketCategory = null | 'hardware' | 'software'
 
 export type Ticket = {
   id: number
