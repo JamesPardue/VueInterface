@@ -3,19 +3,23 @@ import { type Ticket } from '@/definitions/TicketTypeDefintions'
 import type { PropType } from 'vue'
 
 const props = defineProps<{ ticket: Ticket }>()
+
+console.log(props.ticket)
 </script>
 
 <template>
   <div class="frame">
     <div class="title">Ticket Details</div>
     <div class="inputs">
-      <InputFrame label="Category"> {{ ticket.category }}</InputFrame>
+      <div>Category</div>
+      <div>{{ ticket.category }}</div>
 
-      <InputFrame label="Type"> BBB </InputFrame>
+      <div>BBB</div>
 
-      <InputFrame label="Subject"> {{ ticket.subject }} </InputFrame>
+      <div>Subject</div>
+      <div>{{ ticket.subject }}</div>
 
-      <InputFrame label="Description"> DDD </InputFrame>
+      <div>DDD</div>
     </div>
   </div>
 </template>

@@ -50,8 +50,8 @@ defineEmits(['changeToSummaryState'])
           state: 'summary',
           ticket: {
             id: 1,
-            category: 'hardware',
-            summary: 'summary test frn input'
+            category: categorySelected,
+            subject: subjectText
           }
         })
       "

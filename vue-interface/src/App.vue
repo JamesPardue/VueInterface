@@ -9,7 +9,7 @@ type InputState = {
 }
 type SummaryState = {
   state: 'summary'
-  ticket?: Ticket
+  ticket: Ticket
 }
 
 const TestTicket: Ticket = {
@@ -23,7 +23,7 @@ const AppState = ref<InputState | SummaryState>({ state: 'input' })
 
 <template>
   <TicketForm v-if="AppState.state === 'input'" @change-to-summary-state="(i) => (AppState = i)" />
-  <TicketSummary v-else :ticket="TestTicket" />
+  <TicketSummary v-else :ticket="AppState.ticket" />
 
   <button
     @click="
@@ -37,7 +37,7 @@ const AppState = ref<InputState | SummaryState>({ state: 'input' })
   <button
     @click="
       () => {
-        AppState = { state: 'summary' }
+        AppState = { state: 'summary', ticket: TestTicket }
       }
     "
   >
