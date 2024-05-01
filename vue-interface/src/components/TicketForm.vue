@@ -43,7 +43,7 @@ defineEmits(['changeToSummaryState'])
       </InputFrame>
     </div>
 
-    <button @click="$emit('changeToSummaryState')">Set to Summary</button>
+    <button @click="$emit('changeToSummaryState')">Submit</button>
   </div>
 </template>
 
