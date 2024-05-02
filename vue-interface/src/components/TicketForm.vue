@@ -10,7 +10,7 @@ import {
   type TicketFile
 } from '@/definitions/TicketTypeDefintions'
 
-defineEmits(['changeToSummaryState'])
+defineEmits(['changeToSummaryState', 'addToTicketList'])
 
 const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
@@ -135,9 +135,8 @@ function deleteFile(id: number) {
       <button
         class="buttonStyle submitButton"
         @click="
-          $emit('changeToSummaryState', {
-            state: 'summary',
-            ticket: {
+          () => {
+            const newTicket = {
               id: 1,
               category: categorySelected,
               type: typesSelected,
@@ -145,7 +144,12 @@ function deleteFile(id: number) {
               description: descriptionText,
               files: ticketFiles
             }
-          })
+            $emit('addToTicketList', newTicket)
+            $emit('changeToSummaryState', {
+              state: 'details',
+              ticket: newTicket
+            })
+          }
         "
       >
         Submit

@@ -2,9 +2,7 @@
 import { type Ticket } from '@/definitions/TicketTypeDefintions'
 import InputFrame from './InputFrame.vue'
 
-const props = defineProps<{ ticket: Ticket }>()
-console.log(props.ticket)
-console.log(props.ticket.description)
+defineProps<{ ticket: Ticket }>()
 </script>
 
 <template>
