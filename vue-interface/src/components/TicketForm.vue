@@ -128,7 +128,14 @@ function deleteFile(id: number) {
       <div class="fileList">
         <div v-for="(file, index) in ticketFiles" :key="index" class="fileContainer">
           <div class="fileName">{{ file.name }}</div>
-          <div class="fileDeleteButton" @click="deleteFile(file.id)">X</div>
+          <img
+            class="fileDeleteButton"
+            @click="deleteFile(file.id)"
+            alt="delete"
+            src="@/assets/trashcan.svg"
+            width="20"
+            height="20"
+          />
         </div>
       </div>
       <button class="attachFileButton" @click="addTicketFile()">+ Attach File</button>
