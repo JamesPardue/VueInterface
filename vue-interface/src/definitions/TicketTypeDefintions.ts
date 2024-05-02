@@ -12,10 +12,16 @@ export const SoftwareTypes = [
 export const NetworkTypes = ['Network Access', 'Connectivity', 'VPN', 'Drivers', 'Other']
 export const InProcessingTypes = ['Access Badge', 'Common Access Card (CAC)', 'SIPR', 'Trello']
 
+export type TicketFile = {
+  id: number
+  name: String
+}
+
 export type Ticket = {
   id: number
   category: TicketCategory
   type: String[]
   subject: String
   description: String
+  files: TicketFile[]
 }

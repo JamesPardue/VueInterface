@@ -23,6 +23,10 @@ console.log(props.ticket.description)
 
       <InputFrame label="Description" class="span2"> {{ ticket.description }}</InputFrame>
     </div>
+
+    <div>
+      <div class="inputLabel">Ticket Files & Documents</div>
+    </div>
   </div>
 </template>
 

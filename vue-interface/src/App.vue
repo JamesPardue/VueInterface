@@ -17,7 +17,11 @@ const TestTicket: Ticket = {
   category: 'Software',
   type: ['t1', 't2'],
   subject: 'subject text',
-  description: 'description text'
+  description: 'description text',
+  files: [
+    { id: 1, name: 'file1' },
+    { id: 2, name: 'file2' }
+  ]
 }
 
 const AppState = ref<InputState | SummaryState>({ state: 'input' })

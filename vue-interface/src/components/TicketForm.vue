@@ -6,7 +6,8 @@ import {
   SoftwareTypes,
   NetworkTypes,
   InProcessingTypes,
-  type TicketCategory
+  type TicketCategory,
+  type TicketFile
 } from '@/definitions/TicketTypeDefintions'
 
 defineEmits(['changeToSummaryState'])
@@ -15,6 +16,7 @@ const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
 const subjectText = ref('')
 const descriptionText = ref('')
+const ticketFiles = ref<TicketFile[]>([])
 
 const categoryTypes = ref<string[]>([])
 const showTypeSelection = ref(false)
@@ -46,6 +48,37 @@ function clearTicket() {
   subjectText.value = ''
   descriptionText.value = ''
   categoryTypes.value = []
+  ticketFiles.value = []
+}
+
+function addTicketFile() {
+  let highestFileNum = 0
+
+  for (; highestFileNum < ticketFiles.value.length; ++highestFileNum) {
+    if (ticketFiles.value[highestFileNum].id !== highestFileNum) {
+      break
+    }
+  }
+  ticketFiles.value.push({
+    id: highestFileNum,
+    name: 'nameoffileattached' + (highestFileNum + 1) + '.ext'
+  })
+
+  ticketFiles.value.sort((a, b) => {
+    return a.id > b.id ? 1 : -1
+  })
+}
+
+function deleteFile(id: number) {
+  const index = ticketFiles.value.findIndex((t) => t.id === id)
+  ticketFiles.value.splice(index, 1)
+
+  // for (let i = 0; i < ticketFiles.value.length; ++i) {
+  //   if (ticketFiles.value[i].id !== id) {
+  //     ticketFiles.value.splice(id, 1)
+  //     break
+  //   }
+  // }
 }
 </script>
 
@@ -93,6 +126,17 @@ function clearTicket() {
       </InputFrame>
     </div>
 
+    <div>
+      <div class="inputLabel">Ticket Files & Documents</div>
+      <div class="fileList">
+        <div v-for="(file, index) in ticketFiles" :key="index" class="fileContainer">
+          <div class="fileName">{{ file.name }}{{ file.id }}</div>
+          <div class="fileDeleteButton" @click="deleteFile(file.id)">X</div>
+        </div>
+      </div>
+      <button class="attachFileButton" @click="addTicketFile()">+ Attach File</button>
+    </div>
+
     <div class="buttonContainer">
       <button class="buttonStyle cancelButton" @click="clearTicket()">Cancel</button>
       <button
@@ -117,6 +161,41 @@ function clearTicket() {
 </template>
 
 <style scoped>
+.fileDeleteButton {
+  color: red;
+  cursor: pointer;
+}
+
+.fileList {
+  display: grid;
+  gap: 4px;
+  justify-content: start;
+}
+
+.fileContainer {
+  display: inline-grid;
+  gap: 12px;
+  justify-items: start;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+
+.fileName {
+  display: flex;
+  color: blue;
+  font-size: 10px;
+}
+
+.attachFileButton {
+  background: ghostwhite;
+  color: black;
+  border: 2px solid grey;
+  border-radius: 4px;
+  padding: 4px 32px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
 .buttonStyle {
   border: none;
   border-radius: 4px;
