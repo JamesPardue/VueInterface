@@ -17,10 +17,11 @@ defineProps({
 .inputContainer {
   display: grid;
   grid-template-rows: auto 1fr;
+  gap: 4px;
 }
 
 .inputLabel {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 }
 </style>
