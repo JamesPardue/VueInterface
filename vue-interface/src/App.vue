@@ -14,9 +14,10 @@ type SummaryState = {
 
 const TestTicket: Ticket = {
   id: 999,
-  category: 'software',
+  category: 'Software',
   type: ['t1', 't2'],
-  subject: '1111111'
+  subject: 'subject text',
+  description: 'description text'
 }
 
 const AppState = ref<InputState | SummaryState>({ state: 'input' })

@@ -1,4 +1,4 @@
-export type TicketCategory = null | 'hardware' | 'software'
+export type TicketCategory = null | 'Hardware' | 'Software' | 'Network' | 'In-Processing'
 
 export const HardwareTypes = ['Laptop', 'Mobile', 'Peripherals', 'Desk Phone', 'Printers', 'Other']
 export const SoftwareTypes = [
@@ -17,4 +17,5 @@ export type Ticket = {
   category: TicketCategory
   type: String[]
   subject: String
+  description: String
 }

@@ -23,16 +23,16 @@ function updateTypes(target: HTMLSelectElement) {
   typesSelected.value = []
 
   switch (target.value) {
-    case 'hardware':
+    case 'Hardware':
       categoryTypes.value = HardwareTypes
       break
-    case 'software':
+    case 'Software':
       categoryTypes.value = SoftwareTypes
       break
-    case 'network':
+    case 'Network':
       categoryTypes.value = NetworkTypes
       break
-    case 'in-processing':
+    case 'In-Processing':
       categoryTypes.value = InProcessingTypes
       break
     default:
@@ -52,17 +52,17 @@ function clearTicket() {
 <template>
   <div class="frame">
     <div class="title">Ticket Details</div>
-    <div class="inputs">
+    <div class="inputframe">
       <InputFrame label="Category" @click="() => (showTypeSelection = false)">
         <select
           v-model="categorySelected"
           @change="updateTypes($event.target as HTMLSelectElement)"
           class="inputStyle"
         >
-          <option value="hardware">Hardware</option>
-          <option value="software">Software</option>
-          <option value="network">Network</option>
-          <option value="in-processing">In-Processing</option>
+          <option value="Hardware">Hardware</option>
+          <option value="Software">Software</option>
+          <option value="Network">Network</option>
+          <option value="In-Processing">In-Processing</option>
         </select>
       </InputFrame>
 
@@ -84,19 +84,11 @@ function clearTicket() {
         </select>
       </InputFrame>
 
-      <InputFrame
-        label="Subject"
-        @click="() => (showTypeSelection = false)"
-        :style="{ gridColumn: '1 / span 2' }"
-      >
+      <InputFrame label="Subject" @click="() => (showTypeSelection = false)" class="span2">
         <input v-model="subjectText" class="inputStyle" />
       </InputFrame>
 
-      <InputFrame
-        label="Description"
-        :style="{ gridColumn: '1 / span 2' }"
-        @click="() => (showTypeSelection = false)"
-      >
+      <InputFrame label="Description" class="span2" @click="() => (showTypeSelection = false)">
         <input v-model="descriptionText" class="inputStyle" />
       </InputFrame>
     </div>
@@ -111,7 +103,9 @@ function clearTicket() {
             ticket: {
               id: 1,
               category: categorySelected,
-              subject: subjectText
+              type: typesSelected,
+              subject: subjectText,
+              description: descriptionText
             }
           })
         "
@@ -148,12 +142,6 @@ function clearTicket() {
   grid-template-columns: auto auto;
   gap: 10px;
   justify-content: right;
-}
-
-.inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px 24px;
 }
 
 .inputStyle {
