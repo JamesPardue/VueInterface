@@ -62,3 +62,9 @@ a,
 .span2 {
   grid-column: 1 / span 2;
 }
+
+.fileName {
+  display: flex;
+  color: blue;
+  font-size: 10px;
+}

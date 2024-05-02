@@ -26,6 +26,9 @@ console.log(props.ticket.description)
 
     <div>
       <div class="inputLabel">Ticket Files & Documents</div>
+      <div v-for="(file, index) in ticket.files" :key="index" class="fileContainer">
+        <div class="fileName">{{ file.name }}</div>
+      </div>
     </div>
   </div>
 </template>

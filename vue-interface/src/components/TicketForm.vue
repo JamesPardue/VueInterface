@@ -72,13 +72,6 @@ function addTicketFile() {
 function deleteFile(id: number) {
   const index = ticketFiles.value.findIndex((t) => t.id === id)
   ticketFiles.value.splice(index, 1)
-
-  // for (let i = 0; i < ticketFiles.value.length; ++i) {
-  //   if (ticketFiles.value[i].id !== id) {
-  //     ticketFiles.value.splice(id, 1)
-  //     break
-  //   }
-  // }
 }
 </script>
 
@@ -130,7 +123,7 @@ function deleteFile(id: number) {
       <div class="inputLabel">Ticket Files & Documents</div>
       <div class="fileList">
         <div v-for="(file, index) in ticketFiles" :key="index" class="fileContainer">
-          <div class="fileName">{{ file.name }}{{ file.id }}</div>
+          <div class="fileName">{{ file.name }}</div>
           <div class="fileDeleteButton" @click="deleteFile(file.id)">X</div>
         </div>
       </div>
@@ -149,7 +142,8 @@ function deleteFile(id: number) {
               category: categorySelected,
               type: typesSelected,
               subject: subjectText,
-              description: descriptionText
+              description: descriptionText,
+              files: ticketFiles
             }
           })
         "
@@ -178,12 +172,6 @@ function deleteFile(id: number) {
   justify-items: start;
   grid-template-columns: auto auto;
   align-items: center;
-}
-
-.fileName {
-  display: flex;
-  color: blue;
-  font-size: 10px;
 }
 
 .attachFileButton {
