@@ -25,3 +25,16 @@ export type Ticket = {
   description: String
   files: TicketFile[]
 }
+
+type InputState = {
+  display: 'input'
+}
+type SummaryState = {
+  display: 'details'
+  ticket: Ticket
+}
+
+type ListState = {
+  display: 'list'
+}
+export type AppState = ListState | InputState | SummaryState

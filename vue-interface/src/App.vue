@@ -3,20 +3,9 @@ import { ref } from 'vue'
 import TicketForm from './components/TicketForm.vue'
 import TicketDetails from './components/TicketDetails.vue'
 import TicketList from './components/TicketList.vue'
-import { type Ticket } from '@/definitions/TicketTypeDefintions'
+import { type Ticket, type AppState } from '@/definitions/TicketTypeDefintions'
 
-type InputState = {
-  state: 'input'
-}
-type SummaryState = {
-  state: 'details'
-  ticket: Ticket
-}
-
-type ListState = {
-  state: 'list'
-}
-const AppState = ref<ListState | InputState | SummaryState>({ state: 'input' })
+const State = ref<AppState>({ display: 'input' })
 
 const Tickets = ref<Ticket[]>([])
 
@@ -37,17 +26,21 @@ Tickets.value.push(TestTicket)
 
 <template>
   <TicketForm
-    v-if="AppState.state === 'input'"
-    @change-to-summary-state="(i) => (AppState = i)"
+    v-if="State.display === 'input'"
+    @change-to-summary-state="(i) => (State = i)"
     @add-to-ticket-list="(t) => Tickets.push(t)"
   />
-  <TicketDetails v-else-if="AppState.state === 'details'" :ticket="AppState.ticket" />
-  <TicketList :tickets="Tickets" v-else />
+  <TicketDetails v-else-if="State.display === 'details'" :ticket="State.ticket" />
+  <TicketList
+    v-else
+    :tickets="Tickets"
+    @show-ticket="(t) => (State = { display: 'details', ticket: t })"
+  />
 
   <button
     @click="
       () => {
-        AppState = { state: 'input' }
+        State = { display: 'input' }
       }
     "
   >
@@ -56,7 +49,7 @@ Tickets.value.push(TestTicket)
   <button
     @click="
       () => {
-        AppState = { state: 'details', ticket: TestTicket }
+        State = { display: 'details', ticket: TestTicket }
       }
     "
   >
@@ -65,7 +58,7 @@ Tickets.value.push(TestTicket)
   <button
     @click="
       () => {
-        AppState = { state: 'list' }
+        State = { display: 'list' }
       }
     "
   >

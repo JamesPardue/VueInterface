@@ -37,15 +37,4 @@ defineProps<{ ticket: Ticket }>()
   border-radius: 4px;
   padding: 4px 8px;
 }
-
-.typeLabel {
-  display: inline-block;
-  background: lightblue;
-  color: darkblue;
-  font-weight: 800;
-  border-radius: 4px;
-  padding: 4px 6px;
-  margin: 0px 2px;
-  font-size: 9px;
-}
 </style>
