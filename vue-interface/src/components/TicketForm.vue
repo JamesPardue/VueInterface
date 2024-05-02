@@ -22,6 +22,11 @@ const ticketFiles = ref<TicketFile[]>([])
 const categoryTypes = ref<string[]>([])
 const showTypeSelection = ref(false)
 
+const categoryInvalid = ref(false)
+const typeInvalid = ref(false)
+const subjectInvalid = ref(false)
+const descriptionInvalid = ref(false)
+
 function updateTypes(target: HTMLSelectElement) {
   typesSelected.value = []
 
@@ -83,7 +88,7 @@ function deleteFile(id: number) {
       <div class="backButton" @click="$emit('backToList')">Back</div>
     </div>
     <div class="inputframe">
-      <InputFrame label="Category" @click="() => (showTypeSelection = false)">
+      <InputFrame label="Category">
         <select
           v-model="categorySelected"
           @change="updateTypes($event.target as HTMLSelectElement)"
@@ -94,6 +99,7 @@ function deleteFile(id: number) {
           <option value="Network">Network</option>
           <option value="In-Processing">In-Processing</option>
         </select>
+        <div v-if="categoryInvalid" class="errorText">Category required</div>
       </InputFrame>
 
       <InputFrame label="Type">
@@ -103,6 +109,11 @@ function deleteFile(id: number) {
             <span v-if="index != Object.keys(typesSelected).length - 1">| </span>
           </span>
         </div>
+        <div
+          v-if="showTypeSelection"
+          class="overlay"
+          @click="() => (showTypeSelection = false)"
+        ></div>
         <select
           v-if="showTypeSelection"
           v-model="typesSelected"
@@ -112,14 +123,17 @@ function deleteFile(id: number) {
           <option disabled value="">Hold Ctrl/Command to select multiple</option>
           <option v-for="(type, index) in categoryTypes" :key="index">{{ type }}</option>
         </select>
+        <div v-if="typeInvalid" class="errorText">Type required</div>
       </InputFrame>
 
-      <InputFrame label="Subject" @click="() => (showTypeSelection = false)" class="span2">
+      <InputFrame label="Subject" class="span2">
         <input v-model="subjectText" class="inputStyle" />
+        <div v-if="subjectInvalid" class="errorText">Subject required</div>
       </InputFrame>
 
-      <InputFrame label="Description" class="span2" @click="() => (showTypeSelection = false)">
+      <InputFrame label="Description" class="span2">
         <input v-model="descriptionText" class="inputStyle" />
+        <div v-if="descriptionInvalid" class="errorText">Description required</div>
       </InputFrame>
     </div>
 
@@ -147,19 +161,42 @@ function deleteFile(id: number) {
         class="buttonStyle submitButton"
         @click="
           () => {
-            const newTicket = {
-              id: id,
-              category: categorySelected,
-              type: typesSelected,
-              subject: subjectText,
-              description: descriptionText,
-              files: ticketFiles
+            if (categorySelected === null) {
+              categoryInvalid = true
+            } else {
+              categoryInvalid = false
             }
-            $emit('addToTicketList', newTicket)
-            $emit('changeToSummaryState', {
-              state: 'details',
-              ticket: newTicket
-            })
+            if (typesSelected.length <= 0) {
+              typeInvalid = true
+            } else {
+              typeInvalid = false
+            }
+            if (subjectText === '') {
+              subjectInvalid = true
+            } else {
+              subjectInvalid = false
+            }
+            if (descriptionText === '') {
+              descriptionInvalid = true
+            } else {
+              descriptionInvalid = false
+            }
+
+            if (!categoryInvalid && !typeInvalid && !subjectInvalid && !descriptionInvalid) {
+              const newTicket = {
+                id: id,
+                category: categorySelected,
+                type: typesSelected,
+                subject: subjectText,
+                description: descriptionText,
+                files: ticketFiles
+              }
+              $emit('addToTicketList', newTicket)
+              $emit('changeToSummaryState', {
+                state: 'details',
+                ticket: newTicket
+              })
+            }
           }
         "
       >
@@ -170,6 +207,20 @@ function deleteFile(id: number) {
 </template>
 
 <style scoped>
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  opacity: 0%;
+}
+
+.errorText {
+  color: red;
+  font-size: 9px;
+}
+
 .fileDeleteButton {
   color: red;
   cursor: pointer;
