@@ -3,11 +3,16 @@ import { type Ticket } from '@/definitions/TicketTypeDefintions'
 import InputFrame from './InputFrame.vue'
 
 defineProps<{ ticket: Ticket }>()
+defineEmits(['backToList'])
 </script>
 
 <template>
-  <div class="frame">
-    <div class="title">Ticket Details</div>
+  <div class="container">
+    <div class="header">
+      <div class="title">Ticket Details</div>
+      <div class="backButton" @click="$emit('backToList')">Back</div>
+    </div>
+
     <div class="inputframe">
       <InputFrame label="Category">
         <div class="categoryDisplay">{{ ticket.category }}</div></InputFrame

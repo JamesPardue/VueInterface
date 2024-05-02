@@ -8,7 +8,8 @@ console.log(props)
 </script>
 
 <template>
-  <div class="frame">
+  <div class="container">
+    <div class="title">Ticket List</div>
     <div class="ticketList">
       <TicketSummary
         v-for="(ticket, index) in tickets"

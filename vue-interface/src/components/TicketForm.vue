@@ -10,7 +10,8 @@ import {
   type TicketFile
 } from '@/definitions/TicketTypeDefintions'
 
-defineEmits(['changeToSummaryState', 'addToTicketList'])
+defineProps<{ id: number }>()
+defineEmits(['changeToSummaryState', 'addToTicketList', 'backToList'])
 
 const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
@@ -76,8 +77,11 @@ function deleteFile(id: number) {
 </script>
 
 <template>
-  <div class="frame">
-    <div class="title">Ticket Details</div>
+  <div class="container">
+    <div class="header">
+      <div class="title">Ticket Details</div>
+      <div class="backButton" @click="$emit('backToList')">Back</div>
+    </div>
     <div class="inputframe">
       <InputFrame label="Category" @click="() => (showTypeSelection = false)">
         <select
@@ -137,7 +141,7 @@ function deleteFile(id: number) {
         @click="
           () => {
             const newTicket = {
-              id: 1,
+              id: id,
               category: categorySelected,
               type: typesSelected,
               subject: subjectText,
