@@ -9,6 +9,8 @@ import {
   type TicketCategory
 } from '@/definitions/TicketTypeDefintions'
 
+defineEmits(['changeToSummaryState'])
+
 const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
 const subjectText = ref('')
@@ -16,11 +18,6 @@ const descriptionText = ref('')
 
 const categoryTypes = ref<string[]>([])
 const showTypeSelection = ref(false)
-
-// defineEmits<{
-//     (e: 'changeState', value: number): void
-// }>()
-defineEmits(['changeToSummaryState'])
 
 function updateTypes(target: HTMLSelectElement) {
   typesSelected.value = []
@@ -41,6 +38,14 @@ function updateTypes(target: HTMLSelectElement) {
     default:
       categoryTypes.value = []
   }
+}
+
+function clearTicket() {
+  categorySelected.value = null
+  typesSelected.value = []
+  subjectText.value = ''
+  descriptionText.value = ''
+  categoryTypes.value = []
 }
 </script>
 
@@ -96,34 +101,55 @@ function updateTypes(target: HTMLSelectElement) {
       </InputFrame>
     </div>
 
-    <button
-      @click="
-        $emit('changeToSummaryState', {
-          state: 'summary',
-          ticket: {
-            id: 1,
-            category: categorySelected,
-            subject: subjectText
-          }
-        })
-      "
-    >
-      Submit
-    </button>
-
-    <button
-      @click="
-        () => {
-          console.log(categorySelected)
-        }
-      "
-    >
-      Test Category
-    </button>
+    <div class="buttonContainer">
+      <button class="buttonStyle cancelButton" @click="clearTicket()">Cancel</button>
+      <button
+        class="buttonStyle submitButton"
+        @click="
+          $emit('changeToSummaryState', {
+            state: 'summary',
+            ticket: {
+              id: 1,
+              category: categorySelected,
+              subject: subjectText
+            }
+          })
+        "
+      >
+        Submit
+      </button>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.buttonStyle {
+  border: none;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 12px 10px;
+  cursor: pointer;
+}
+
+.submitButton {
+  background: midnightblue;
+  color: ghostwhite;
+}
+
+.cancelButton {
+  background: ghostwhite;
+  color: midnightblue;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  justify-content: right;
+}
+
 .inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
