@@ -11,7 +11,7 @@ import {
 } from '@/definitions/TicketTypeDefintions'
 
 defineProps<{ id: number }>()
-defineEmits(['changeToSummaryState', 'addToTicketList', 'backToList'])
+defineEmits(['addToTicketList', 'backToList'])
 
 const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
@@ -192,10 +192,6 @@ function deleteFile(id: number) {
                 files: ticketFiles
               }
               $emit('addToTicketList', newTicket)
-              $emit('changeToSummaryState', {
-                state: 'details',
-                ticket: newTicket
-              })
             }
           }
         "
@@ -299,8 +295,5 @@ input:focus {
 .multiSelectStyle {
   position: absolute;
   width: auto;
-}
-
-@media (min-width: 1024px) {
 }
 </style>

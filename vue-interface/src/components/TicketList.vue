@@ -2,9 +2,8 @@
 import { type Ticket } from '@/definitions/TicketTypeDefintions'
 import TicketSummary from './TicketSummary.vue'
 
-const props = defineProps<{ tickets: Ticket[] }>()
+defineProps<{ tickets: Ticket[] }>()
 defineEmits(['showTicket'])
-console.log(props)
 </script>
 
 <template>

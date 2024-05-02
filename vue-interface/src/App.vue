@@ -45,8 +45,12 @@ AddTicket(StartingTicket2)
     <TicketForm
       v-if="State.display === 'input'"
       :id="TicketCount"
-      @change-to-summary-state="(i) => (State = i)"
-      @add-to-ticket-list="(t) => AddTicket(t)"
+      @add-to-ticket-list="
+        (t) => {
+          AddTicket(t)
+          State = { display: 'list' }
+        }
+      "
       @back-to-list="State = { display: 'list' }"
     />
     <TicketDetails
@@ -59,7 +63,6 @@ AddTicket(StartingTicket2)
       :tickets="Tickets"
       @show-ticket="(t) => (State = { display: 'details', ticket: t })"
     />
-
     <button
       v-if="State.display === 'list'"
       class="addTicketButton"
