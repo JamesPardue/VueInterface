@@ -15,6 +15,7 @@ type SummaryState = {
 const TestTicket: Ticket = {
   id: 999,
   category: 'software',
+  type: ['t1', 't2'],
   subject: '1111111'
 }
 

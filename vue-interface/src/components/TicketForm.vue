@@ -1,19 +1,47 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import InputFrame from './InputFrame.vue'
-import { type TicketCategory } from '@/definitions/TicketTypeDefintions'
+import {
+  HardwareTypes,
+  SoftwareTypes,
+  NetworkTypes,
+  InProcessingTypes,
+  type TicketCategory
+} from '@/definitions/TicketTypeDefintions'
 
 const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
 const subjectText = ref('')
 const descriptionText = ref('')
 
+const categoryTypes = ref<string[]>([])
 const showTypeSelection = ref(false)
 
 // defineEmits<{
 //     (e: 'changeState', value: number): void
 // }>()
 defineEmits(['changeToSummaryState'])
+
+function updateTypes(target: HTMLSelectElement) {
+  typesSelected.value = []
+
+  switch (target.value) {
+    case 'hardware':
+      categoryTypes.value = HardwareTypes
+      break
+    case 'software':
+      categoryTypes.value = SoftwareTypes
+      break
+    case 'network':
+      categoryTypes.value = NetworkTypes
+      break
+    case 'in-processing':
+      categoryTypes.value = InProcessingTypes
+      break
+    default:
+      categoryTypes.value = []
+  }
+}
 </script>
 
 <template>
@@ -21,7 +49,11 @@ defineEmits(['changeToSummaryState'])
     <div class="title">Ticket Details</div>
     <div class="inputs">
       <InputFrame label="Category" @click="() => (showTypeSelection = false)">
-        <select v-model="categorySelected" class="inputStyle">
+        <select
+          v-model="categorySelected"
+          @change="updateTypes($event.target as HTMLSelectElement)"
+          class="inputStyle"
+        >
           <option value="hardware">Hardware</option>
           <option value="software">Software</option>
           <option value="network">Network</option>
@@ -33,7 +65,7 @@ defineEmits(['changeToSummaryState'])
         <div @click="showTypeSelection = !showTypeSelection" class="inputStyle multiSelectDisplay">
           <span v-for="(type, index) in typesSelected" :key="index"
             >{{ type }}
-            <span v-if="index != Object.keys(typesSelected).length - 1">, </span>
+            <span v-if="index != Object.keys(typesSelected).length - 1">| </span>
           </span>
         </div>
         <select
@@ -43,13 +75,15 @@ defineEmits(['changeToSummaryState'])
           class="inputStyle multiSelectStyle"
         >
           <option disabled value="">Hold Ctrl/Command to select multiple</option>
-          <option>A</option>
-          <option>B</option>
-          <option>C</option>
+          <option v-for="(type, index) in categoryTypes" :key="index">{{ type }}</option>
         </select>
       </InputFrame>
 
-      <InputFrame label="Subject" @click="() => (showTypeSelection = false)">
+      <InputFrame
+        label="Subject"
+        @click="() => (showTypeSelection = false)"
+        :style="{ gridColumn: '1 / span 2' }"
+      >
         <input v-model="subjectText" class="inputStyle" />
       </InputFrame>
 
@@ -103,14 +137,16 @@ defineEmits(['changeToSummaryState'])
   border-radius: 4px;
   padding: 4px 2px;
   font-family: arial;
+  font-size: 14px;
 }
 input:focus {
   background: white;
 }
 
 .multiSelectDisplay {
-  font-size: 12px;
+  font-size: 14px;
   min-height: 28px;
+  padding: 0px 4px;
 }
 
 .multiSelectStyle {
