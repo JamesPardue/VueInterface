@@ -13,6 +13,7 @@ import {
 defineProps<{ id: number }>()
 defineEmits(['addToTicketList', 'backToList'])
 
+//Data for ticket
 const categorySelected = ref<TicketCategory>(null)
 const typesSelected = ref([])
 const subjectText = ref('')
@@ -22,6 +23,7 @@ const ticketFiles = ref<TicketFile[]>([])
 const categoryTypes = ref<string[]>([])
 const showTypeSelection = ref(false)
 
+//Toggles for displaying validation messages
 const categoryInvalid = ref(false)
 const typeInvalid = ref(false)
 const subjectInvalid = ref(false)
@@ -57,6 +59,7 @@ function clearTicket() {
   ticketFiles.value = []
 }
 
+//Deletes and sorts ticket files (files are always in order based on their id)
 function addTicketFile() {
   let highestFileNum = 0
 
@@ -161,6 +164,7 @@ function deleteFile(id: number) {
         class="buttonStyle submitButton"
         @click="
           () => {
+            //Check if ticket has all valid input
             if (categorySelected === null) {
               categoryInvalid = true
             } else {
@@ -182,6 +186,7 @@ function deleteFile(id: number) {
               descriptionInvalid = false
             }
 
+            //If ticket is valid, add ticket and return to list
             if (!categoryInvalid && !typeInvalid && !subjectInvalid && !descriptionInvalid) {
               const newTicket = {
                 id: id,

@@ -10,11 +10,14 @@ const State = ref<AppState>({ display: 'list' })
 const Tickets = ref<Ticket[]>([])
 const TicketCount = ref(0)
 
+//AddTicket adds tickets to the list and updates the current count to be used for ticket ids.
+//Tickets should only be added using this function.
 function AddTicket(ticket: Ticket) {
   Tickets.value.push(ticket)
   TicketCount.value++
 }
 
+//Starting tickets to better demonstrate list
 const StartingTicket1: Ticket = {
   id: 0,
   category: 'Software',
@@ -26,7 +29,6 @@ const StartingTicket1: Ticket = {
     { id: 2, name: 'file2' }
   ]
 }
-
 const StartingTicket2: Ticket = {
   id: 1,
   category: 'Hardware',
@@ -35,13 +37,13 @@ const StartingTicket2: Ticket = {
   description: 'This is a hardware ticket',
   files: []
 }
-
 AddTicket(StartingTicket1)
 AddTicket(StartingTicket2)
 </script>
 
 <template>
   <div class="frame">
+    <!-- View shown depends on the display state: 'input', 'list', or 'details'-->
     <TicketForm
       v-if="State.display === 'input'"
       :id="TicketCount"

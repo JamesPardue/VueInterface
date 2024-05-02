@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//This component encapsulates the common 'label and input/info' pattern
 defineProps({
   label: {
     type: String
